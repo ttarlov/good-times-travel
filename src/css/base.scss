@@ -1,6 +1,23 @@
-/* This is an example of using Sass, otherwise plain CSS works too*/
-$primary-background: pink;
+@import 'variables';
+@import 'main-section';
+@import 'log-in-window';
+
+* {
+  box-sizing: border-box;
+  cursor: default;
+  margin: 0;
+  padding: 0;
+}
 
 body {
-  background-color: $primary-background;
+  background-color: $grey-background;
+  font-family: $heading-font;
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  font-family: $heading-font;
+  color: white;
+  font-size: 4em;
 }
