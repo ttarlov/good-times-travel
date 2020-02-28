@@ -1,29 +1,40 @@
-// This is the JavaScript entry file - your code begins here
-// Do not delete or rename this file ********
-
-// An example of how you import jQuery into a JS file if you use jQuery in that file
 import $ from 'jquery';
 import './css/base.scss';
 import domUpdates from './dom-updates.js'
-
-// An example of how you tell webpack to use an image (also need to link to it in the index.html)
 import './images/hammer-sickle.png';
+// An example of how you tell webpack to use an image (also need to link to it in the index.html)
+import Traveler from './traveler';
+import ApiRequestController from './api-controller';
 
-console.log('This is the JavaScript entry file - your code begins here.');
+const api = new ApiRequestController();
 
 
+const generateUserId = () => {
+  let userName = $('#username-input').val();
+  let userId = userName.match(/\d+/g);
+  return userId;
+}
 
 
-
-const eventHandler = (event) => {
-  if(event.target.id == "log-in-btn") {
-    console.log("Log in button clicked")
-    // $(".log-in-popup").hide();
-    domUpdates.hideLoginWindow()
+ function processLogIn(data) {
+  if($('#password-input').val() === 'travel2020' && $('#username-input').val().includes('travel'))  {
+    createUser(data);
+    api.getUserById(generateUserId()).then((data) => createUser(data));
+    domUpdates.hideLoginWindow();
+  } else {
+    alert("Wrong Password or User Name! User name must be travelxx where xx is user id");
   }
-
 };
 
 
 
-$("body").click(eventHandler);
+const createUser = (data) => {
+  let user = new Traveler(data);
+console.log(user)
+};
+
+
+
+
+// $("body").click(eventHandler);
+$('#log-in-btn').click(processLogIn)
