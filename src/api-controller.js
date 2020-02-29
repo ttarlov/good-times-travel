@@ -7,24 +7,28 @@ class ApiRequestController {
 
 getUserById(id) {
   let url = `${this.rootUrl}/travelers/travelers/${id}`;
+  return fetch(url).then(response => response.json());
+}
+
+
+fetchAllTrips(){
+  let url = `${this.rootUrl}/trips/trips`;
   return fetch(url).then(response => response.json())
 }
 
-
-getTrips(){
-
-//will get trips
-
+fetchAllDestinations() {
+  let url = `${this.rootUrl}/destinations/destinations`;
+  return fetch(url).then(response => response.json())
 }
 
-
 getAllTravelers() {
-
+  let url = `${this.rootUrl}/travelers/travelers`;
+  return fetch(url).then(response => response.json());
 }
 
 
 getAllDestinations() {
-  
+
 }
 
 }
