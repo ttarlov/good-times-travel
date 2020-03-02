@@ -2,20 +2,33 @@ import $ from 'jquery';
 import './css/base.scss';
 import domUpdates from './dom-updates.js'
 import './images/hammer-sickle.png';
+import './images/kim.gif';
 // An example of how you tell webpack to use an image (also need to link to it in the index.html)
 import Traveler from './traveler';
 import ApiRequestController from './api-controller';
 import Agency from './travel-agent';
 import Trips from './trips';
+import Destinations from './destinations';
 
 const api = new ApiRequestController();
+const moment = require("moment");
+let loggedInTraveler;
+
+let m = moment();
 
 console.log(api);
+console.log(m.format('L'));
+console.log(moment("2020/05/06", "YYYY/MM/DD").fromNow().includes('in'));
 
 const generateUserId = () => {
   let userName = $('#username-input').val();
   let userId = userName.match(/\d+/g);
-  return Number(userId);
+  if(userId > 50) {
+    window.alert('user id does not exist, try again')
+    location.reload();
+  } else {
+    return Number(userId);
+    }
 }
 
 
@@ -28,6 +41,7 @@ const generateUserId = () => {
     event.preventDefault();
     getAgencyData();
     domUpdates.hideLoginWindow();
+    // domUpdates.showWelcomeCard();
   } else {
     window.alert("Wrong Password or User Name")
   }
@@ -37,19 +51,26 @@ const generateUserId = () => {
 const getTravelerData = () => {
   let fethechedTreveler = api.getUserById(generateUserId());
   let fethchedAllTrips = api.fetchAllTrips();
+  let fetchedAllDestinations = api.fetchAllDestinations();
 
-  Promise.all([fethechedTreveler, fethchedAllTrips])
+  Promise.all([fethechedTreveler, fethchedAllTrips, fetchedAllDestinations])
   .then(finalVals => {
     let traveler = finalVals[0];
     let allTrips = finalVals[1];
-    createTraveler(traveler, allTrips)
+    let allDestinations = finalVals[2];
+    createTraveler(traveler, allTrips, allDestinations)
   }).catch(error => console.log(error.message))
 };
 
 
-const createTraveler = (traveler, allTrips) => {
+const createTraveler = (traveler, allTrips, allDestinations) => {
+
+  console.log(allDestinations);
   let trips = new Trips(allTrips);
-  let loggedInTraveler = new Traveler(traveler, trips.getTripsById(generateUserId()));
+  let destinations = new Destinations(allDestinations)
+  loggedInTraveler = new Traveler(traveler, trips.getTripsById(generateUserId()));
+  loggedInTraveler.addDestinations(allDestinations.destinations);
+  domUpdates.showWelcomeCard(loggedInTraveler);
   console.log(loggedInTraveler)
 };
 
@@ -77,5 +98,15 @@ const createAgency = (tripsData, destinationData, travelersData) => {
   console.log(agent)
 }
 
+const tripsDisplayHandler = (event) => {
+  if(event.target.id === "past-trips-btn") {
+    domUpdates.showPastTrips(loggedInTraveler);
+  } else if (event.target.id === 'future-trips-btn') {
+    domUpdates.showFutureTrips(loggedInTraveler);
+  }
+
+}
+
 
 $('#log-in-btn').click(processLogIn)
+$('#welcome-card').click(tripsDisplayHandler)
