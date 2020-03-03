@@ -11,10 +11,12 @@ let domUpdates = {
     $(".welcome-user-card").html(`
       <section class="info-card">
         <h2>Dear Leader Congratulates You On Your Trips</h2>
+        <p>Your Total Amount Spent On Trips This Year is: $${loggedInTraveler.calculateTotalAmountSpentOnTrips()}. Including Great Leaders cut of 10%</p>
           <p>
             <button id="past-trips-btn">Past Trips</button>
             <button id="current-trips-btn">Current Trips</button>
             <button id="future-trips-btn">Future Trips</button>
+            <button id="pending-trips-btn">Pending Trips</button>
           </p>
       </section>
       <section class="trips-details-section" id="trips-details">
@@ -27,7 +29,7 @@ let domUpdates = {
 
   showPastTrips(loggedInTraveler) {
     if(loggedInTraveler.pastTrips.length === 0) {
-      $("#trips-details").html(`<p>No Past Trips Found. Travel More Buddy!</p>`)
+      $("#trips-details").html(`<p>No Past Trips Found. Great Leader Not Happy!</p>`)
     } else {
         $("#trips-details").html(``);
         loggedInTraveler.pastTrips.forEach(trip => {
@@ -43,7 +45,8 @@ let domUpdates = {
 
   showFutureTrips(loggedInTraveler) {
     if(loggedInTraveler.futureTrips.length === 0) {
-      $("#trips-details").html(`<p>No Future Trips Found. Corona Virus Global Trip Discount Available!</p>`)
+      $("#trips-details").html(`<p>No Future Trips Found. Corona Virus Global Trip Discount Available!</p>
+        <p><img alt='picture of corona virus causing beer' src='./images/corona-beer.jpg'></p>`)
     } else {
         $("#trips-details").html(``);
         loggedInTraveler.futureTrips.forEach(trip => {
@@ -55,6 +58,21 @@ let domUpdates = {
 
     }
 
+  },
+
+  showPendingTrips(loggedInTraveler) {
+    if(loggedInTraveler.pendingTrips.length === 0) {
+      $("#trips-details").html(`<p>No Pending Trips Found!</p>`)
+    } else {
+        $("#trips-details").html(``);
+        loggedInTraveler.pendingTrips.forEach(trip => {
+          $("#trips-details").append(
+            `<section class="trip-container"><p>Location Name: ${trip.destination.destination}</p>
+            <p> <img class="trip-image" alt="${trip.destination.alt}" src="${trip.destination.image}"></p>
+            </section>`)
+        })
+
+    }
   }
 
 
