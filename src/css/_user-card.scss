@@ -1,14 +1,16 @@
 .welcome-user-card {
   // border: solid red 2px;
   width: 60%;
-  height: 500px;
+  height: 600px;
   display: none;
   box-shadow: $default-box-shadow;
+  overflow: scroll;
 
   .info-card {
     display: flex;
     align-items: center;
     flex-direction: column;
+
 
     h2 {
       margin-left: 0;
@@ -16,14 +18,25 @@
       margin-bottom: 20px;
     }
 
+    p {
+      padding: 10px;
+      color: $communist-red;
+      font-size: 1em;
+    }
+
     button {
       padding: 10px;
-      border: solid #C70C00;
+      border: solid $communist-red;
       border-radius: 10%;
-      background-color: #FFD700;
+      background-color: $communist-yellow;
       margin: 0px 32px;
       font-family: inherit;
       font-size: 1.2em;
+
+      &:hover {
+        background-color: $communist-red;
+        color: $communist-yellow;
+      }
     }
 
   }
@@ -32,6 +45,7 @@
 .trips-details-section {
   display: flex;
   justify-content: space-evenly;
+  flex-wrap: wrap;
   align-items: center;
   width: auto;
   height: auto;
@@ -43,6 +57,7 @@
     align-items: center;
     box-shadow: $default-box-shadow;
     padding: 25px;
+    margin: 15px;
 
     p {
       margin-bottom: 10px;
