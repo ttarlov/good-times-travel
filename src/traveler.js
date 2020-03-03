@@ -6,8 +6,9 @@ class Traveler {
     this.name = data.name;
     this.travelerType = data.travelerType;
     this.myTrips = myTripsData;
-    this.pastTrips = this.findPastTrips();
-    this.futureTrips = this.findUpcomingTrips();
+    this.pastTrips = this.findPastTrips(); //need to test for these property changes
+    this.futureTrips = this.findUpcomingTrips(); // need to test for these property changes
+    this.pendingTrips = this.findPendingTrips();
   }
 
   addDestinations(destinationsArray) {
@@ -42,7 +43,37 @@ class Traveler {
     return futureTrips;
   }
 
+  findPendingTrips() {
+    let pendingTrips = [];
+    let myTrips = this.myTrips;
 
+    myTrips.forEach(trip => {
+      if(trip.status === "pending") {
+        pendingTrips.push(trip);
+      }
+    })
+    return pendingTrips;
+  }
+
+  calculateTotalAmountSpentOnTrips() {
+    let tripsThisYear = [];
+    let myTrips = this.myTrips;
+    myTrips.forEach(trip => {
+      let thisYearsTrip = trip.date.split('');
+      if(thisYearsTrip[3] === '0' && trip.status === 'approved') {
+        tripsThisYear.push(trip)
+      }
+      console.log(tripsThisYear);
+    });
+      return tripsThisYear.reduce((totalCost, singleTrip) => {
+        console.log(totalCost);
+
+            totalCost += ((singleTrip.destination.estimatedLodgingCostPerDay * singleTrip.duration) + (singleTrip.destination.estimatedFlightCostPerPerson * singleTrip.travelers))
+            console.log(totalCost)
+        return Math.round(totalCost * 1.1);
+      },0);
+
+  }
 
 
 
