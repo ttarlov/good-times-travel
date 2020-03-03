@@ -16,7 +16,7 @@ let domUpdates = {
             <button id="past-trips-btn">Past Trips</button>
             <button id="current-trips-btn">Current Trips</button>
             <button id="future-trips-btn">Future Trips</button>
-            <button id="pending-trips-btn">Pending Trips</button>
+            <button id="to-be-approved-trips-btn">Pending Trips</button>
           </p>
       </section>
       <section class="trips-details-section" id="trips-details">
@@ -92,6 +92,21 @@ let domUpdates = {
         })
 
     }
+  },
+
+  showAgentPendingTrips(agent) {
+    if(agent.pendingTrips.length === 0) {
+      $("#trips-details").html(`<p>No Pending Trips Found!</p>`)
+    } else {
+        $("#trips-details").html(``);
+        agent.pendingTrips.forEach(trip => {
+          $("#trips-details").append(
+            `<section class="trip-container"><p>Location Name: ${trip.destination.destination}</p>
+            <p> <img class="trip-image" alt="${trip.destination.alt}" src="${trip.destination.image}"></p>
+            </section>`)
+        })
+    }
+
   }
 
 
