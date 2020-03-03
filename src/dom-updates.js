@@ -6,14 +6,33 @@ let domUpdates = {
     $(".log-in-popup").hide(600);
   },
 
-  showWelcomeCard(loggedInTraveler) {
+  showAgentWelcomeCard(agent) {
+    $("#tag-line-and-name").html(`Welcome Supreme Leader ${agent.name}`)
+    $(".welcome-user-card").html(`
+      <section class="info-card">
+        <h2>The Socialist Party is Proud of Your Hard Work</h2>
+        <p>Supreme Leaders Revenue this year is: $${'amount'}.</p>
+          <p>
+            <button id="past-trips-btn">Past Trips</button>
+            <button id="current-trips-btn">Current Trips</button>
+            <button id="future-trips-btn">Future Trips</button>
+            <button id="pending-trips-btn">Pending Trips</button>
+          </p>
+      </section>
+      <section class="trips-details-section" id="trips-details">
+      <p><img class="the-great-leader" src="./images/kim2.jpg"  alt="supreme leader on a pony or some shit like that"></p>
+    </section>
+    `).show(600)
+  },
+
+  showTravelerWelcomeCard(loggedInTraveler) {
     $("#tag-line-and-name").html(`Welcome Comrad ${loggedInTraveler.getLastName()}`)
     $(".welcome-user-card").html(`
       <section class="info-card">
         <h2>Dear Leader Congratulates You On Your Trips</h2>
         <p>Your Total Amount Spent On Trips This Year is: $${loggedInTraveler.calculateTotalAmountSpentOnTrips()}. Including Great Leaders cut of 10%</p>
           <p>
-            <button id="past-trips-btn">Past Trips</button>
+            <button id="to-be-approved-trips-btn">Trips Needing Approval</button>
             <button id="current-trips-btn">Current Trips</button>
             <button id="future-trips-btn">Future Trips</button>
             <button id="pending-trips-btn">Pending Trips</button>
