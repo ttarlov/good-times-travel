@@ -3,6 +3,7 @@ import './css/base.scss';
 import domUpdates from './dom-updates.js'
 import './images/hammer-sickle.png';
 import './images/kim.gif';
+import './images/kim2.jpg'
 // An example of how you tell webpack to use an image (also need to link to it in the index.html)
 import Traveler from './traveler';
 import ApiRequestController from './api-controller';
@@ -13,12 +14,13 @@ import Destinations from './destinations';
 const api = new ApiRequestController();
 const moment = require("moment");
 let loggedInTraveler;
+let agent;
 
 let m = moment();
 
 console.log(api);
 console.log(m.format('L'));
-console.log(moment("2020/05/06", "YYYY/MM/DD").fromNow().includes('in'));
+console.log(moment("2020/05/06", "YYYY/MM/DD").fromNow());
 
 const generateUserId = () => {
   let userName = $('#username-input').val();
@@ -67,11 +69,13 @@ const createTraveler = (traveler, allTrips, allDestinations) => {
 
   console.log(allDestinations);
   let trips = new Trips(allTrips);
-  let destinations = new Destinations(allDestinations)
+  let destinations = new Destinations(allDestinations)// might not even be needed.
   loggedInTraveler = new Traveler(traveler, trips.getTripsById(generateUserId()));
   loggedInTraveler.addDestinations(allDestinations.destinations);
-  domUpdates.showWelcomeCard(loggedInTraveler);
+  // loggedInTraveler.calculateTotalAmountSpentOnTrips();
+  domUpdates.showTravelerWelcomeCard(loggedInTraveler);
   console.log(loggedInTraveler)
+  loggedInTraveler.calculateTotalAmountSpentOnTrips();
 };
 
 
@@ -94,7 +98,8 @@ const getAgencyData = () => {
 
 
 const createAgency = (tripsData, destinationData, travelersData) => {
-  let agent = new Agency(tripsData, destinationData, travelersData)
+  agent = new Agency(tripsData, destinationData, travelersData)
+  domUpdates.showAgentWelcomeCard(agent);
   console.log(agent)
 }
 
@@ -103,6 +108,10 @@ const tripsDisplayHandler = (event) => {
     domUpdates.showPastTrips(loggedInTraveler);
   } else if (event.target.id === 'future-trips-btn') {
     domUpdates.showFutureTrips(loggedInTraveler);
+  } else if (event.target.id === 'pending-trips-btn') {
+    domUpdates.showPendingTrips(loggedInTraveler);
+  } else if(event.target.id === 'to-be-approved-trips-btn') {
+    
   }
 
 }
