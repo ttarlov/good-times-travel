@@ -11,9 +11,52 @@ describe('Traveler', function() {
   let listOfTravelers;
   let tripsData;
   let trip;
-
+  let destinationsData;
 
   beforeEach(function() {
+    destinationsData = [
+      {
+        "id": 49,
+        "destination": "Castries, St Lucia",
+        "estimatedLodgingCostPerDay": 650,
+        "estimatedFlightCostPerPerson": 90,
+        "image": 'fake-img.jpg',
+        "alt": "aerial photography of rocky mountain under cloudy sky"
+      },
+      {
+        "id": 25,
+        "destination": "New York, New York",
+        "estimatedLodgingCostPerDay": 175,
+        "estimatedFlightCostPerPerson": 200,
+        "image": 'fake-img.jpg',
+        "alt": "people crossing the street during the day surrounded by tall buildings and advertisements"
+      },
+      {
+        "id": 19,
+        "destination": "Quito, Ecuador",
+        "estimatedLodgingCostPerDay": 60,
+        "estimatedFlightCostPerPerson": 500,
+        "image": 'fake-img.jpg',
+        "alt": "a city at night with cloudy, snowy mountains in the distance"
+      },
+      {
+        "id": 13,
+        "destination": "St. Petersburg, Russia",
+        "estimatedLodgingCostPerDay": 100,
+        "estimatedFlightCostPerPerson": 1100,
+        "image": 'fake-img.jpg',
+        "alt": "buildings and people crossing the street carrying shoping bags during the day"
+      },
+      {
+        "id": 21,
+        "destination": "Tulum, Mexico",
+        "estimatedLodgingCostPerDay": 100,
+        "estimatedFlightCostPerPerson": 350,
+        "image": 'fake-img.jpg',
+        "alt": "a donkey standing on the beach"
+      },
+    ]
+
    listOfTravelers = [
     {
     "id": 1,
@@ -199,7 +242,7 @@ describe('getLastName Method', function(){
     });
 });
 
-describe('find Past Trips Method', function(){
+describe('findPastTrips Method', function(){
 
   it('should find all past Trips', function(){
 
@@ -241,6 +284,205 @@ describe('find Past Trips Method', function(){
 
 });
 
+
+describe('addDestinations Method', function(){
+
+
+  it('Should find matching destinations for myTrips', function(){
+    expect(traveler.myTrips).to.deep.equal([
+  {
+
+    id: 1,
+    userID: 1,
+    destinationID: 49,
+    travelers: 1,
+    date: '2023/09/16',
+    duration: 8,
+    status: 'approved',
+    suggestedActivities: []
+  },
+  {
+    id: 2,
+    userID: 1,
+    destinationID: 25,
+    travelers: 5,
+    date: '2022/10/04',
+    duration: 18,
+    status: 'pending',
+    suggestedActivities: []
+  },
+  {
+    id: 141,
+    userID: 1,
+    destinationID: 19,
+    travelers: 5,
+    date: '2016/01/05',
+    duration: 18,
+    status: 'approved',
+    suggestedActivities: []
+  },{
+
+    id: 144,
+    userID: 1,
+    destinationID: 13,
+    travelers: 2,
+    date: '2018/09/21',
+    duration: 4,
+    status: 'approved',
+    suggestedActivities: []
+  },
+  {
+    id: 149,
+    userID: 1,
+    destinationID: 21,
+    travelers: 2,
+    date: '2020/03/01',
+    duration: 4,
+    status: 'approved',
+    suggestedActivities: []
+  }])
+    traveler.addDestinations(destinationsData);
+    expect(traveler.myTrips).deep.equal([{
+    id: 1,
+    userID: 1,
+    destinationID: 49,
+    travelers: 1,
+    date: '2023/09/16',
+    duration: 8,
+    status: 'approved',
+    suggestedActivities: [],
+    destination: {
+      id: 49,
+      destination: 'Castries, St Lucia',
+      estimatedLodgingCostPerDay: 650,
+      estimatedFlightCostPerPerson: 90,
+      image: 'fake-img.jpg',
+      alt: 'aerial photography of rocky mountain under cloudy sky'
+    }
+  },{
+    id: 2,
+    userID: 1,
+    destinationID: 25,
+    travelers: 5,
+    date: '2022/10/04',
+    duration: 18,
+    status: 'pending',
+    suggestedActivities: [],
+    destination: {
+      id: 25,
+      destination: 'New York, New York',
+      estimatedLodgingCostPerDay: 175,
+      estimatedFlightCostPerPerson: 200,
+      image: 'fake-img.jpg',
+      alt: 'people crossing the street during the day surrounded by tall buildings and advertisements'
+    }
+  },{
+    id: 141,
+    userID: 1,
+    destinationID: 19,
+    travelers: 5,
+    date: '2016/01/05',
+    duration: 18,
+    status: 'approved',
+    suggestedActivities: [],
+    destination: {
+      id: 19,
+      destination: 'Quito, Ecuador',
+      estimatedLodgingCostPerDay: 60,
+      estimatedFlightCostPerPerson: 500,
+      image: 'fake-img.jpg',
+      alt: 'a city at night with cloudy, snowy mountains in the distance'
+    }
+  },{
+    id: 144,
+    userID: 1,
+    destinationID: 13,
+    travelers: 2,
+    date: '2018/09/21',
+    duration: 4,
+    status: 'approved',
+    suggestedActivities: [],
+    destination: {
+      id: 13,
+      destination: 'St. Petersburg, Russia',
+      estimatedLodgingCostPerDay: 100,
+      estimatedFlightCostPerPerson: 1100,
+      image: 'fake-img.jpg',
+      alt: 'buildings and people crossing the street carrying shoping bags during the day'
+    }
+  },{
+    id: 149,
+    userID: 1,
+    destinationID: 21,
+    travelers: 2,
+    date: '2020/03/01',
+    duration: 4,
+    status: 'approved',
+    suggestedActivities: [],
+    destination: {
+      id: 21,
+      destination: 'Tulum, Mexico',
+      estimatedLodgingCostPerDay: 100,
+      estimatedFlightCostPerPerson: 350,
+      image: 'fake-img.jpg',
+      alt: 'a donkey standing on the beach'
+    }
+  }]);
+  });
+
+
+});
+
+describe('findUpcomingTrips Method', function(){
+
+  it('Should be able to find all upcoming trips', function(){
+    expect(traveler.findUpcomingTrips()).to.deep.equal([
+  {
+    id: 1,
+    userID: 1,
+    destinationID: 49,
+    travelers: 1,
+    date: '2023/09/16',
+    duration: 8,
+    status: 'approved',
+    suggestedActivities: []
+  },
+  {
+    id: 2,
+    userID: 1,
+    destinationID: 25,
+    travelers: 5,
+    date: '2022/10/04',
+    duration: 18,
+    status: 'pending',
+    suggestedActivities: []
+  }
+]);
+  });
+});
+
+describe('findPendingTrips Method', function(){
+
+
+  it('Should be able to find pending trips', function(){
+    expect(traveler.findPendingTrips()).to.deep.equal([
+  {
+    id: 2,
+    userID: 1,
+    destinationID: 25,
+    travelers: 5,
+    date: '2022/10/04',
+    duration: 18,
+    status: 'pending',
+    suggestedActivities: []
+  }
+])
+
+
+  });
+
+
+});
 
 
 
