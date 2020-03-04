@@ -98,7 +98,8 @@ const getAgencyData = () => {
 
 
 const createAgency = (tripsData, destinationData, travelersData) => {
-  agent = new Agency(tripsData, destinationData, travelersData)
+  agent = new Agency(tripsData.trips, travelersData.travelers)
+  agent.addDestinations(destinationData.destinations);
   domUpdates.showAgentWelcomeCard(agent);
   console.log(agent)
 }
@@ -111,7 +112,7 @@ const tripsDisplayHandler = (event) => {
   } else if (event.target.id === 'pending-trips-btn') {
     domUpdates.showPendingTrips(loggedInTraveler);
   } else if(event.target.id === 'to-be-approved-trips-btn') {
-    
+    domUpdates.showAgentPendingTrips(agent);
   }
 
 }
