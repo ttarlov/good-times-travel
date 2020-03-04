@@ -11,7 +11,7 @@ let domUpdates = {
     $(".welcome-user-card").html(`
       <section class="info-card">
         <h2>The Socialist Party is Proud of Your Hard Work</h2>
-        <p>Supreme Leaders Revenue this year is: $${'amount'}.</p>
+        <p>Supreme Leaders Income this year is: $${agent.calculateTotalIncome()}</p>
           <p>
             <button id="past-trips-btn">Past Trips</button>
             <button id="current-trips-btn">Current Trips</button>
@@ -20,7 +20,7 @@ let domUpdates = {
           </p>
       </section>
       <section class="trips-details-section" id="trips-details">
-      <p><img class="the-great-leader" src="./images/kim2.jpg"  alt="supreme leader on a pony or some shit like that"></p>
+      <p><img class="the-great-leader" src="./images/kim2.jpg"  alt="supreme leader on a horse"></p>
     </section>
     `).show(600)
   },
