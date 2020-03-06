@@ -1,3 +1,5 @@
+const moment = require("moment");
+
 class Agency {
   constructor(tripsData, listOfTravelers) {
     this.name = "Kim";
@@ -5,7 +7,23 @@ class Agency {
     this.travelers = listOfTravelers;
     this.pendingTrips = this.findPendingTrips();
     this.approvedTrips = this.findApprovedTrips();
-    this.thisYearsTrips = this.findThisYearsTrips()
+    this.thisYearsTrips = this.findThisYearsTrips();
+    this.todaysTrips = this.findTravelersForToday();
+  }
+
+
+  findTravelersForToday() {
+    let tripsForToday = [];
+    this.approvedTrips.forEach(trip => {
+      if(trip.date == moment().format('YYYY/MM/DD')) {
+        tripsForToday.push(trip)
+      }
+    })
+    return tripsForToday;
+  }
+
+  countNumberOfTripsForToday() {
+    return this.todaysTrips.length;
   }
 
 
@@ -13,7 +31,7 @@ class Agency {
     this.trips.forEach((trip) => {
     const tripDestination = destinationsArray.find((destination) => destination.id === trip.destinationID)
     trip.destination = tripDestination
-    })
+  });
   }
 
   findPendingTrips() {
