@@ -15,12 +15,12 @@ const api = new ApiRequestController();
 const moment = require("moment");
 let loggedInTraveler;
 let agent;
+let destinations;
 
 let m = moment();
 
 console.log(api);
-console.log(m.format('L'));
-console.log(moment("2020/05/06", "YYYY/MM/DD").fromNow());
+console.log(m.format("YYYY/MM/DD"));
 
 const generateUserId = () => {
   let userName = $('#username-input').val();
@@ -69,7 +69,7 @@ const createTraveler = (traveler, allTrips, allDestinations) => {
 
   console.log(allDestinations);
   let trips = new Trips(allTrips);
-  let destinations = new Destinations(allDestinations)// might not even be needed.
+  destinations = new Destinations(allDestinations)// might not even be needed.
   loggedInTraveler = new Traveler(traveler, trips.getTripsById(generateUserId()));
   loggedInTraveler.addDestinations(allDestinations.destinations);
   // loggedInTraveler.calculateTotalAmountSpentOnTrips();
@@ -100,7 +100,7 @@ const getAgencyData = () => {
 const createAgency = (tripsData, destinationData, travelersData) => {
   agent = new Agency(tripsData.trips, travelersData.travelers)
   agent.addDestinations(destinationData.destinations);
-  domUpdates.showAgentWelcomeCard(agent);
+  domUpdates.showAgentWelcomeCard(agent)
   console.log(agent)
 }
 
@@ -113,6 +113,10 @@ const tripsDisplayHandler = (event) => {
     domUpdates.showPendingTrips(loggedInTraveler);
   } else if(event.target.id === 'to-be-approved-trips-btn') {
     domUpdates.showAgentPendingTrips(agent);
+  } else if(event.target.id === 'trip-request-btn') {
+    domUpdates.showTravelerTripRequestForm(loggedInTraveler, destinations.destinations.destinations);
+  } else if(event.target.id === 'back-btn') {
+    domUpdates.showTravelerWelcomeCard(loggedInTraveler);
   }
 
 }
