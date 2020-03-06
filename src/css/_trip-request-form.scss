@@ -1,0 +1,24 @@
+.available-destinations {
+  box-shadow: $default-box-shadow;
+  width: 67%;
+  height: 350px;
+  padding: 20px;
+  overflow: scroll;
+
+  .destination-details-section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+}
+
+
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%
+
+}
