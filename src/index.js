@@ -18,9 +18,12 @@ let agent;
 let destinations;
 
 let m = moment();
+moment().format();
+// console.log(api);
+// console.log(moment().format());
 
-console.log(api);
-console.log(m.format("YYYY/MM/DD"));
+// console.log(moment().startOf('1').fromNow());
+
 
 const generateUserId = () => {
   let userName = $('#username-input').val();
@@ -67,15 +70,14 @@ const getTravelerData = () => {
 
 const createTraveler = (traveler, allTrips, allDestinations) => {
 
-  console.log(allDestinations);
+  console.log(allTrips);
   let trips = new Trips(allTrips);
   destinations = new Destinations(allDestinations)// might not even be needed.
   loggedInTraveler = new Traveler(traveler, trips.getTripsById(generateUserId()));
   loggedInTraveler.addDestinations(allDestinations.destinations);
-  // loggedInTraveler.calculateTotalAmountSpentOnTrips();
   domUpdates.showTravelerWelcomeCard(loggedInTraveler);
-  console.log(loggedInTraveler)
   loggedInTraveler.calculateTotalAmountSpentOnTrips();
+  console.log(loggedInTraveler)
 };
 
 
@@ -110,6 +112,8 @@ const tripsDisplayHandler = (event) => {
   } else if (event.target.id === 'future-trips-btn') {
     domUpdates.showFutureTrips(loggedInTraveler);
   } else if (event.target.id === 'pending-trips-btn') {
+    console.log(loggedInTraveler.findPendingTrips());
+    loggedInTraveler.findPendingTrips(); // not sure its doing anything here
     domUpdates.showPendingTrips(loggedInTraveler);
   } else if(event.target.id === 'to-be-approved-trips-btn') {
     domUpdates.showAgentPendingTrips(agent);
@@ -117,8 +121,35 @@ const tripsDisplayHandler = (event) => {
     domUpdates.showTravelerTripRequestForm(loggedInTraveler, destinations.destinations.destinations);
   } else if(event.target.id === 'back-btn') {
     domUpdates.showTravelerWelcomeCard(loggedInTraveler);
+  } else if(event.target.classList.contains('reserve-trip')) {
+    $(event.target).toggleClass('select-trip')
+    // console.log('reserver trip button')
+  } else if (event.target.id === 'calculate-trip-cost') {
+    buildPotentialTripObj()
+    $("#submit-trip-request-btn").prop("disabled", false);
+    $("#submit-trip-request-btn").css("cursor", "pointer");
+  } else if (event.target.id === "submit-trip-request-btn") {
+    loggedInTraveler.submitTripRequest();
+    getTravelerData()
   }
+}
 
+const buildPotentialTripObj = () => {
+  // loggedInTraveler.calculatePotentialTripCost(destinations.destinations.destinations, Number($('.select-trip').attr('id')))
+let  potentialTrip = {
+    id: Date.now(),
+    userID: loggedInTraveler.id,
+    destinationID: Number($('.select-trip').attr('id')),
+    travelers: Number($('#number-of-travelers').val()),
+    date: moment($('#trip-date').val()).format("YYYY/MM/DD"),
+    duration: Number($('#trip-duration').val()),
+    status: 'pending',
+    suggestedActivities: [ ],
+  }
+    let estimateTripCost = loggedInTraveler.calculatePotentialTripCost(destinations.destinations.destinations, potentialTrip)
+    domUpdates.displayEstimateTripCost(estimateTripCost)
+// console.log(potentialTrip)
+loggedInTraveler.tripQuote = potentialTrip;
 }
 
 
