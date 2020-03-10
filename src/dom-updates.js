@@ -110,7 +110,7 @@ let domUpdates = {
 
 
   showTravelerTripRequestForm(loggedInTraveler, destinations) {
-    console.log(destinations);
+    // console.log(destinations);
     $("#tag-line-and-name").html(`Welcome Comrad ${loggedInTraveler.getLastName()}`);
     $(".welcome-user-card").html(`
       <section class="info-card">
@@ -119,7 +119,7 @@ let domUpdates = {
       <form>
       <p>
       <label for="start-date">Trip Start date:</label>
-      <input type="date" id="start" name="trip-start"
+      <input type="date" id="trip-date" name="trip-start"
        value="${moment().format("YYYY-MM-DD")}"
        min="${moment().format("YYYY-MM-DD")}" max="2028-12-31">
        </p>
@@ -131,6 +131,8 @@ let domUpdates = {
         <lable for="number-of-travelers">Number of Travelers:</label>
         <input type="number" id="number-of-travelers" name="number-of-travelers">
        </p>
+       <p class="estimate-trip-cost" id="estimate-cost">
+       </p>
        <section class="available-destinations">
        <section class="destination-details-section" id="destination-details-section">
        </section>
@@ -139,16 +141,27 @@ let domUpdates = {
       `);
       destinations.forEach( destination => {
         $("#destination-details-section").append(
-          `<section class="trip-container"><p>${destination.destination}</p>
+          `<section class="trip-container" data-id="${destination.id}"><p>${destination.destination}</p>
           <p> <img class="trip-image" alt="${destination.alt}" src="${destination.image}"></p>
+          <button type="button" class="reserve-trip" id="${destination.id}">Reserve Trip</button>
           </section>`)
         });
+        $(".welcome-user-card").append(`
+        <div class="submit-cal-trip-btn">
+         <button type="button" id="calculate-trip-cost"> Calc Trip Cost</button>
+         <button type="submit" id="submit-trip-request-btn"> Submit </button>
+        </div> `);
+        $("#submit-trip-request-btn").css("cursor", "not-allowed")
+        $("#submit-trip-request-btn").prop("disabled", true);
+  },
+
+
+
+  displayEstimateTripCost(estimateCost) {
+    $('#estimate-cost').css("border", "solid black");
+    $('#estimate-cost').html(`Estimated cost of your trip is $${estimateCost}`)
 
   }
-
-
-
-
 
 
 
