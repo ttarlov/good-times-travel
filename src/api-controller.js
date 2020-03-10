@@ -7,11 +7,12 @@ class ApiRequestController {
 
 getUserById(id) {
   let url = `${this.rootUrl}/travelers/travelers/${id}`;
+  console.log(id);
   return fetch(url).then(response => response.json());
 }
 
 
-fetchAllTrips(){
+fetchAllTrips() {
   let url = `${this.rootUrl}/trips/trips`;
   return fetch(url).then(response => response.json())
 }
@@ -26,8 +27,23 @@ getAllTravelers() {
   return fetch(url).then(response => response.json());
 }
 
+postTripRequest(tripRequestObj) {
+
+let url = `${this.rootUrl}/trips/trips`;
+return fetch(url, {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify(tripRequestObj)
+})
+  .then(response => console.log(response.json()))
+  .catch(error => console.log(error.message));
+}
+
 
 }
 
+// test for the correct arguments being passed. check that function returns and has error handling.
 
 module.exports = ApiRequestController
