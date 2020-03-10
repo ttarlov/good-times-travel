@@ -1,10 +1,30 @@
 .welcome-user-card {
-  // border: solid red 2px;
   width: 60%;
-  height: 650px;
+  height: 765px;
   display: none;
   box-shadow: $default-box-shadow;
   overflow: scroll;
+
+  .submit-cal-trip-btn {
+    text-align: center;
+    margin-top: 20px;
+  }
+
+
+  button {
+    padding: 10px;
+    border: solid $communist-red;
+    border-radius: 10%;
+    background-color: $communist-yellow;
+    margin: 0px 32px;
+    font-family: inherit;
+    font-size: 1.2em;
+
+    &:hover {
+      background-color: $communist-red;
+      color: $communist-yellow;
+    }
+  }
 
   .info-card {
     display: flex;
@@ -29,20 +49,7 @@
       text-align: center;
     }
 
-    button {
-      padding: 10px;
-      border: solid $communist-red;
-      border-radius: 10%;
-      background-color: $communist-yellow;
-      margin: 0px 32px;
-      font-family: inherit;
-      font-size: 1.2em;
 
-      &:hover {
-        background-color: $communist-red;
-        color: $communist-yellow;
-      }
-    }
 
   }
 }
