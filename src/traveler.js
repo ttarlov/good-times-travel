@@ -106,7 +106,7 @@ class Traveler {
 
   submitTripRequest() {
     console.log(this.tripQuote);
-    this.apiController.postTripRequest(this.tripQuote);
+  return this.apiController.postTripRequest(this.tripQuote);
 
   }
 
