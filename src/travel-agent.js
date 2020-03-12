@@ -12,6 +12,20 @@ class Agency {
   }
 
 
+  findTravelerById(id) {
+    let travelerName;
+
+    this.travelers.forEach(traveler => {
+      if(traveler.id === id) {
+        travelerName = traveler.name;
+      }
+
+    });
+
+    return travelerName;
+
+  }
+
   findTravelersForToday() {
     let tripsForToday = [];
     this.approvedTrips.forEach(trip => {
