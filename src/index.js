@@ -10,6 +10,7 @@ import ApiRequestController from './api-controller';
 import Agency from './travel-agent';
 import Trips from './trips';
 import Destinations from './destinations';
+import Trip from './trip';
 
 const api = new ApiRequestController();
 const moment = require("moment");
@@ -113,7 +114,6 @@ const tripsDisplayHandler = (event) => {
     domUpdates.showFutureTrips(loggedInTraveler);
   } else if (event.target.id === 'pending-trips-btn') {
     console.log(loggedInTraveler.findPendingTrips());
-    loggedInTraveler.findPendingTrips(); // not sure its doing anything here
     domUpdates.showPendingTrips(loggedInTraveler);
   } else if(event.target.id === 'to-be-approved-trips-btn') {
     domUpdates.showAgentPendingTrips(agent);
@@ -123,33 +123,46 @@ const tripsDisplayHandler = (event) => {
     domUpdates.showTravelerWelcomeCard(loggedInTraveler);
   } else if(event.target.classList.contains('reserve-trip')) {
     $(event.target).toggleClass('select-trip')
+    unlockCalculateTripPriceButton();
     // console.log('reserver trip button')
   } else if (event.target.id === 'calculate-trip-cost') {
     buildPotentialTripObj()
     $("#submit-trip-request-btn").prop("disabled", false);
     $("#submit-trip-request-btn").css("cursor", "pointer");
   } else if (event.target.id === "submit-trip-request-btn") {
-    loggedInTraveler.submitTripRequest();
-    getTravelerData()
+    loggedInTraveler.submitTripRequest()
+    .then(() => getTravelerData())
   }
 }
 
 const buildPotentialTripObj = () => {
   // loggedInTraveler.calculatePotentialTripCost(destinations.destinations.destinations, Number($('.select-trip').attr('id')))
-let  potentialTrip = {
-    id: Date.now(),
-    userID: loggedInTraveler.id,
-    destinationID: Number($('.select-trip').attr('id')),
-    travelers: Number($('#number-of-travelers').val()),
-    date: moment($('#trip-date').val()).format("YYYY/MM/DD"),
-    duration: Number($('#trip-duration').val()),
-    status: 'pending',
-    suggestedActivities: [ ],
-  }
+
+  let potentialTrip = new Trip(loggedInTraveler.id, Number($('.select-trip').attr('id')),
+  Number($('#number-of-travelers').val()), moment($('#trip-date').val()).format("YYYY/MM/DD"),
+ Number($('#trip-duration').val()))
+
+// let  potentialTrip = {
+//     id: Date.now(),
+//     userID: loggedInTraveler.id,
+//     destinationID: Number($('.select-trip').attr('id')),
+//     travelers: Number($('#number-of-travelers').val()),
+//     date: moment($('#trip-date').val()).format("YYYY/MM/DD"),
+//     duration: Number($('#trip-duration').val()),
+//     status: 'pending',
+//     suggestedActivities: [ ],
+//   }
     let estimateTripCost = loggedInTraveler.calculatePotentialTripCost(destinations.destinations.destinations, potentialTrip)
     domUpdates.displayEstimateTripCost(estimateTripCost)
-// console.log(potentialTrip)
+console.log(potentialTrip)
 loggedInTraveler.tripQuote = potentialTrip;
+}
+
+
+const unlockCalculateTripPriceButton = () => {
+  if($('#trip-duration').val().length > 0 && $('#number-of-travelers').val().length > 0) {
+    $("#calculate-trip-cost").attr('disabled', false);
+  }
 }
 
 
