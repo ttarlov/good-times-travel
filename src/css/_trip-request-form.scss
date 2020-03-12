@@ -1,0 +1,39 @@
+.available-destinations {
+  box-shadow: $default-box-shadow;
+  width: 67%;
+  height: 350px;
+  padding: 20px;
+  overflow: scroll;
+  margin-top: 30px;
+
+  .destination-details-section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    button {
+      font-size: 0.9em;
+      height: 1.9em;
+      width: 11em;
+      padding: 0;
+    }
+  }
+
+}
+
+.select-trip {
+  color: green;
+}
+
+.estimate-trip-cost {
+  color: black;
+}
+
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%
+
+}

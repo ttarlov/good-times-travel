@@ -1,6 +1,38 @@
-/* This is an example of using Sass, otherwise plain CSS works too*/
-$primary-background: pink;
+@import 'variables';
+@import 'main-section';
+@import 'log-in-window';
+@import 'user-card';
+@import 'trips-cards';
+@import 'trip-request-form';
+
+* {
+  box-sizing: border-box;
+  cursor: default;
+  margin: 0;
+  padding: 0;
+}
 
 body {
-  background-color: $primary-background;
+  background-color: $communist-yellow;
+  font-family: $heading-font;
+  margin: 0;
+  padding: 0;
+  height: 1000px;
+}
+
+h1 {
+  font-family: $heading-font;
+  color: $communist-red;
+  font-size: 2.7em;
+  margin-left: 40px;
+}
+
+h2 {
+  margin-left: 100px;
+  font-size: 1.5em;
+}
+
+.logo-img {
+  height: 100px;
+  width: 100px;
 }
