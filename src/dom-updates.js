@@ -1,6 +1,10 @@
 import $ from 'jquery';
+import ApiRequestController from './api-controller';
 const moment = require("moment");
+let api = new ApiRequestController;
+
 let domUpdates = {
+
 
   hideLoginWindow() {
     $(".log-in-popup").hide(600);
@@ -14,7 +18,6 @@ let domUpdates = {
         <p>Supreme Leaders Income this year is: $${agent.calculateTotalIncome()}</p>
           <p>
             <button id="current-trips-btn">Travelers For Today:<span> ${agent.countNumberOfTripsForToday()}</span></button>
-            <button id="future-trips-btn">Future Trips</button>
             <button id="to-be-approved-trips-btn">Trip Requests</button>
           </p>
       </section>
@@ -86,6 +89,9 @@ let domUpdates = {
         loggedInTraveler.pendingTrips.forEach(trip => {
           $("#trips-details").append(
             `<section class="trip-container"><p>Location Name: ${trip.destination.destination}</p>
+            <p>Trip Length: ${trip.duration} Days</p>
+            <p>Comrads Joing You: ${trip.travelers}</p>
+            <p>Trip Starts In: ${moment(trip.date, "YYYY/MM/DD").fromNow()}</p>
             <p> <img class="trip-image" alt="${trip.destination.alt}" src="${trip.destination.image}"></p>
             </section>`)
         })
@@ -99,8 +105,13 @@ let domUpdates = {
     } else {
         $("#trips-details").html(``);
         agent.pendingTrips.forEach(trip => {
+          console.log("From The Trips",trip.userID);
           $("#trips-details").append(
-            `<section class="trip-container"><p>Location Name: ${trip.destination.destination}</p>
+            `<section class="trip-container">
+            <p class="location-name">Location Name:</p>
+            <p>${trip.destination.destination}</p>
+            <p class="comrad-name">Traveling Comrad Name:</p>
+            <p>${agent.findTravelerById(trip.userID)}</p>
             <p> <img class="trip-image" alt="${trip.destination.alt}" src="${trip.destination.image}"></p>
             </section>`)
         })
@@ -148,7 +159,7 @@ let domUpdates = {
         });
         $(".welcome-user-card").append(`
         <div class="submit-cal-trip-btn">
-         <button type="button" id="calculate-trip-cost"> Calc Trip Cost</button>
+         <button type="button" disabled id="calculate-trip-cost"> Calc Trip Cost</button>
          <button type="submit" id="submit-trip-request-btn"> Submit </button>
         </div> `);
         $("#submit-trip-request-btn").css("cursor", "not-allowed")
