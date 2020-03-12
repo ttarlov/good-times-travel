@@ -485,5 +485,19 @@ describe('findPendingTrips Method', function(){
 });
 
 
+describe('calculateTotalAmountSpentOnTrips Method', function(){
+
+  it('should calculate total amount spent on a trip in a single year', function(){
+    traveler.addDestinations(destinationsData);
+    expect(traveler.calculateTotalAmountSpentOnTrips()).to.deep.equal(1210)
+
+  });
+
+
+});
+
+
+
+
 
 });
