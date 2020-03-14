@@ -48,7 +48,7 @@ class Traveler {
     let myTrips = this.myTrips;
 
     myTrips.forEach(trip => {
-      if(moment(trip.date, "YYYY/MM/DD").fromNow().includes('in')) {
+      if(moment(trip.date, "YYYY/MM/DD").fromNow().includes('in') && trip.status === "approved") {
         futureTrips.push(trip);
       }
     })
