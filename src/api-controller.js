@@ -57,6 +57,20 @@ return fetch(url, {
 
 }
 
+denyTripRequest(tripObj) {
+  let url = `${this.rootUrl}/trips/trips`;
+  return fetch(url, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(tripObj)
+  })
+    .then(response => console.log(response.json()))
+    .catch(error => console.log(error.message));
+
+}
+
 
 }
 

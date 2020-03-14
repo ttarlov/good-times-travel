@@ -13,6 +13,11 @@ let domUpdates = {
   showAgentWelcomeCard(agent) {
     $("#tag-line-and-name").html(`Welcome Supreme Leader ${agent.name}`)
     $(".welcome-user-card").html(`
+      <div class="pop-up hidden">
+      <a href="#" class="close" id="close-x"></a>
+      <p><h2>Trip Has Been Updated</h2></p>
+      <p><img class="pop-up-img" src="./images/kim_clap.gif"  alt="happy leader clapping"></p>
+      </div>
       <section class="info-card">
         <h2>The Socialist Party is Proud of Your Hard Work</h2>
         <p>Supreme Leaders Income this year is: $${agent.calculateTotalIncome()}</p>
@@ -201,6 +206,7 @@ let domUpdates = {
   },
 
   hideApprovedTripCard(event) {
+    $(".pop-up").removeClass("hidden");
     event.target.parentElement.closest(".trip-container").remove()
   },
 
@@ -244,8 +250,12 @@ let domUpdates = {
     });
 
 
-  }
+  },
 
+closePopUp(event) {
+  $(".pop-up").remove()
+
+}
 
 }
 
