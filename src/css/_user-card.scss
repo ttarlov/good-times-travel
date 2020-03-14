@@ -46,7 +46,7 @@
       padding: 10px;
       color: $communist-red;
       font-size: 1em;
-      text-align: center;
+      display: flex;
     }
 
 
@@ -60,3 +60,18 @@
   width: 400px;
   height: 350px
 }
+
+.trip-deny-approve-section {
+  display: flex;
+}
+
+
+.approve-trip-btn,
+.deny-trip-btn {
+  width: 6.2em;
+  height: 2.7em;
+  font-size: 1em !important;
+}
+
+
+//
