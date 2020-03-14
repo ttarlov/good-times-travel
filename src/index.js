@@ -132,7 +132,22 @@ const tripsDisplayHandler = (event) => {
   } else if (event.target.id === "submit-trip-request-btn") {
     loggedInTraveler.submitTripRequest()
     .then(() => getTravelerData())
+  } else if (event.target.id === "search-btn") {
+    event.preventDefault();
+    executeSearch();
+  } else if (event.target.classList.contains("approve-trip-btn")) {
+    console.log(event.target);
+    makeApprovedTrip(event)
+  } else if (event.target.id === "today-trips-btn") {
+    domUpdates.showTodaysTrips(agent);
   }
+}
+
+const makeApprovedTrip = (event) => {
+  let approvedTrip = {id: Number(event.target.id), status: "approved"}
+  console.log(approvedTrip);
+  api.approveTripRequest(approvedTrip)
+  .then(() => domUpdates.hideApprovedTripCard(event))
 }
 
 const buildPotentialTripObj = () => {
@@ -164,6 +179,23 @@ const unlockCalculateTripPriceButton = () => {
     $("#calculate-trip-cost").attr('disabled', false);
   }
 }
+
+
+const executeSearch = () => {
+
+  var filter = $("#search-input").val().toUpperCase();
+  var comradName = [...document.getElementsByTagName('h4')]
+
+  comradName.forEach(name => {
+
+   if( name.innerText.toUpperCase().indexOf(filter) > -1) {
+     name.parentElement.closest('.trip-container').style.display = "";
+   } else {
+     name.closest('.trip-container').style.display = 'none';
+   }
+ })
+
+};
 
 
 $('#log-in-btn').click(processLogIn)

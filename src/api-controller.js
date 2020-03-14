@@ -42,6 +42,22 @@ return fetch(url, {
 }
 
 
+approveTripRequest(tripObj) {
+let url = `${this.rootUrl}/trips/updateTrip`;
+
+return fetch(url, {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify(tripObj)
+})
+  .then(response => console.log(response.json()))
+  .catch(error => console.log(error.message));
+
+}
+
+
 }
 
 // test for the correct arguments being passed. check that function returns and has error handling.

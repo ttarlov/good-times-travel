@@ -17,9 +17,17 @@ let domUpdates = {
         <h2>The Socialist Party is Proud of Your Hard Work</h2>
         <p>Supreme Leaders Income this year is: $${agent.calculateTotalIncome()}</p>
           <p>
-            <button id="current-trips-btn">Travelers For Today:<span> ${agent.countNumberOfTripsForToday()}</span></button>
+            <button id="today-trips-btn">Travelers For Today:<span> ${agent.countNumberOfTripsForToday()}</span></button>
             <button id="to-be-approved-trips-btn">Trip Requests</button>
           </p>
+            <div class="search-bar-wrap hidden">
+              <form id="search">
+              <div class="search">
+                <input type="text" id="search-input" class="searchTerm" placeholder="Search Comrade by Name?">
+                <button type="submit" id="search-btn" class="searchButton">Search</button>
+              </div>
+                </form>
+            </div>
       </section>
       <section class="trips-details-section" id="trips-details">
       <p><img class="the-great-leader" src="./images/kim2.jpg"  alt="supreme leader on a horse"></p>
@@ -35,7 +43,7 @@ let domUpdates = {
         <p>Your Total Amount Spent On Trips This Year is: $${loggedInTraveler.calculateTotalAmountSpentOnTrips()}. Including Great Leaders cut of 10%</p>
           <p>
             <button id="current-trips-btn">Current Trips</button>
-            <button id="future-trips-btn">Future Trips</button>
+            <button id="future-trips-btn">ApprovedTrips</button>
             <button id="pending-trips-btn">Pending Trips</button>
             <button id="trip-request-btn">Request Trip</button>
           </p>
@@ -104,19 +112,37 @@ let domUpdates = {
       $("#trips-details").html(`<p>No Pending Trips Found!</p>`)
     } else {
         $("#trips-details").html(``);
+        $(".search-bar-wrap").removeClass("hidden");
         agent.pendingTrips.forEach(trip => {
-          console.log("From The Trips",trip.userID);
           $("#trips-details").append(
             `<section class="trip-container">
             <p class="location-name">Location Name:</p>
             <p>${trip.destination.destination}</p>
             <p class="comrad-name">Traveling Comrad Name:</p>
-            <p>${agent.findTravelerById(trip.userID)}</p>
+            <h4>${agent.findTravelerById(trip.userID)}</h4>
             <p> <img class="trip-image" alt="${trip.destination.alt}" src="${trip.destination.image}"></p>
+            <p>Trip Revenue: $${agent.calculaterTravelerSpendOnSingleTrip(trip.userID)}</p>
+            <div class="trip-deny-approve-section">
+            <button type="button" class="approve-trip-btn" id="${trip.id}">Approve</button>
+            <button type="button" class="deny-trip-btn" id="${trip.id}">Deny</button>
+            </div>
             </section>`)
-        })
+        });
     }
+    $("#search-input").on('keyup', function() {
+      var filter = $("#search-input").val().toUpperCase();
+      var comradName = [...document.getElementsByTagName('h4')]
 
+      comradName.forEach(name => {
+
+       if( name.innerText.toUpperCase().indexOf(filter) > -1) {
+         name.parentElement.closest('.trip-container').style.display = "";
+       } else {
+         name.closest('.trip-container').style.display = 'none';
+       }
+     })
+
+    });
   },
 
 
@@ -172,8 +198,53 @@ let domUpdates = {
     $('#estimate-cost').css("border", "solid black");
     $('#estimate-cost').html(`Estimated cost of your trip is $${estimateCost}`)
 
-  }
+  },
 
+  hideApprovedTripCard(event) {
+    event.target.parentElement.closest(".trip-container").remove()
+  },
+
+
+  showTodaysTrips(agent) {
+
+    if(agent.todaysTrips.length === 0) {
+      $("#trips-details").html(`<p>Its Corona Virus Pendemic, You Fool!</p>`)
+    } else {
+        $("#trips-details").html(``);
+        $(".search-bar-wrap").removeClass("hidden");
+        agent.todaysTrips.forEach(trip => {
+          $("#trips-details").append(
+            `<section class="trip-container">
+            <p class="location-name">Location Name:</p>
+            <p>${trip.destination.destination}</p>
+            <p class="comrad-name">Traveling Comrad Name:</p>
+            <h4>${agent.findTravelerById(trip.userID)}</h4>
+            <p> <img class="trip-image" alt="${trip.destination.alt}" src="${trip.destination.image}"></p>
+            <p>Trip Revenue: $${agent.calculaterTravelerSpendOnSingleTrip(trip.userID)}</p>
+            <div class="trip-deny-approve-section">
+            <button type="button" class="approve-trip-btn" id="${trip.id}">Approve</button>
+            <button type="button" class="deny-trip-btn" id="${trip.id}">Deny</button>
+            </div>
+            </section>`)
+        });
+    }
+    $("#search-input").on('keyup', function() {
+      var filter = $("#search-input").val().toUpperCase();
+      var comradName = [...document.getElementsByTagName('h4')]
+
+      comradName.forEach(name => {
+
+       if( name.innerText.toUpperCase().indexOf(filter) > -1) {
+         name.parentElement.closest('.trip-container').style.display = "";
+       } else {
+         name.closest('.trip-container').style.display = 'none';
+       }
+     })
+
+    });
+
+
+  }
 
 
 }

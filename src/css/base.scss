@@ -4,6 +4,7 @@
 @import 'user-card';
 @import 'trips-cards';
 @import 'trip-request-form';
+@import 'search-bar';
 
 * {
   box-sizing: border-box;
@@ -35,4 +36,8 @@ h2 {
 .logo-img {
   height: 100px;
   width: 100px;
+}
+
+.hidden {
+  display: none;
 }

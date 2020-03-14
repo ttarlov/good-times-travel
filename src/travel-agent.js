@@ -26,6 +26,7 @@ class Agency {
 
   }
 
+
   findTravelersForToday() {
     let tripsForToday = [];
     this.approvedTrips.forEach(trip => {
@@ -82,6 +83,39 @@ class Agency {
 
     return totalRevenue.toFixed(2)
   }
+
+  // calculateTravelerTripSpend(id) { // Useless Method
+  //   let travelerTrips = [];
+  //   this.trips.forEach(trip => {
+  //     if(trip.userID === id) {
+  //       travelerTrips.push(trip);
+  //     }
+  //   })
+  //   console.log(travelerTrips);
+  //   return travelerTrips.reduce((totalRevenue, singleTrip) => {
+  //     // console.log(totalCost);
+  //
+  //         totalRevenue += ((singleTrip.destination.estimatedLodgingCostPerDay * singleTrip.duration) + (singleTrip.destination.estimatedFlightCostPerPerson * singleTrip.travelers))
+  //         console.log(totalRevenue)
+  //     return Math.round(totalRevenue * 1.1);
+  //   },0);
+  // }
+
+  calculaterTravelerSpendOnSingleTrip(id) {
+    let currentTrip;
+
+    this.trips.forEach(trip => {
+      if(trip.userID === id) {
+        currentTrip = trip;
+      }
+    });
+    console.log(currentTrip);
+    let totalRevenue = ((currentTrip.destination.estimatedLodgingCostPerDay * currentTrip.duration) + (currentTrip.destination.estimatedFlightCostPerPerson * currentTrip.travelers))
+    console.log(Math.round(totalRevenue * 1.1));
+    return Math.round(totalRevenue * 1.1);
+  }
+
+
 
 }
 
