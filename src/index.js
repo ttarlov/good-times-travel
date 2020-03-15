@@ -3,7 +3,8 @@ import './css/base.scss';
 import domUpdates from './dom-updates.js'
 import './images/hammer-sickle.png';
 import './images/kim.gif';
-import './images/kim2.jpg'
+import './images/kim2.jpg';
+import './images/kim_clap.gif';
 // An example of how you tell webpack to use an image (also need to link to it in the index.html)
 import Traveler from './traveler';
 import ApiRequestController from './api-controller';
@@ -139,8 +140,22 @@ const tripsDisplayHandler = (event) => {
     console.log(event.target);
     makeApprovedTrip(event)
   } else if (event.target.id === "today-trips-btn") {
+    console.log("todays trips button");
     domUpdates.showTodaysTrips(agent);
+  } else if (event.target.classList.contains("deny-trip-btn")) {
+    denyTrip(event);
+  } else if (event.target.id === "close-x") {
+    console.log("x clicked");
+    domUpdates.closePopUp(event);
   }
+}
+
+const denyTrip = (event) => {
+  let deniedTrip = {id: Number(event.target.id)}
+  console.log(deniedTrip)
+  api.denyTripRequest(deniedTrip)
+  .then(() => domUpdates.hideApprovedTripCard(event))
+
 }
 
 const makeApprovedTrip = (event) => {
@@ -156,17 +171,6 @@ const buildPotentialTripObj = () => {
   let potentialTrip = new Trip(loggedInTraveler.id, Number($('.select-trip').attr('id')),
   Number($('#number-of-travelers').val()), moment($('#trip-date').val()).format("YYYY/MM/DD"),
  Number($('#trip-duration').val()))
-
-// let  potentialTrip = {
-//     id: Date.now(),
-//     userID: loggedInTraveler.id,
-//     destinationID: Number($('.select-trip').attr('id')),
-//     travelers: Number($('#number-of-travelers').val()),
-//     date: moment($('#trip-date').val()).format("YYYY/MM/DD"),
-//     duration: Number($('#trip-duration').val()),
-//     status: 'pending',
-//     suggestedActivities: [ ],
-//   }
     let estimateTripCost = loggedInTraveler.calculatePotentialTripCost(destinations.destinations.destinations, potentialTrip)
     domUpdates.displayEstimateTripCost(estimateTripCost)
 console.log(potentialTrip)
@@ -196,6 +200,7 @@ const executeSearch = () => {
  })
 
 };
+
 
 
 $('#log-in-btn').click(processLogIn)
