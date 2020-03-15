@@ -20,17 +20,17 @@ Clone down the repo. Use terminal commands to navigate to the root folder of the
 3. As an Agent: Username: agency. Password: travel2020. When you log in you will be presented with options to see trip requests  by travelers. You are able to approve or deny trip requests. You can see how much travelers spent on individual trips an also how much revenue you have over the past year.
 You are able to search travelers by first and last name.
 
-![](log_in_screen.png)
-![](traveler_dashboard.png)
-![](traveler_trip_request.png)
-![](agent_dashboard_1.png)
-![](agent_dashboard_2.png)
+![](src/screen_shots/log_in_screen.png)
+![](src/screen_shots/traveler_dashboard.png)
+![](src/screen_shots/traveler_trip_request.png)
+![](src/screen_shots/agent_dashboard_1.png)
+![](src/screen_shots/agent_dashboard_2.png)
 
 ### Interaction as Traveler
-![](traveler_interaction.gif)
+![](src/screen_shots/traveler_interaction.gif)
 
 ### Interaction as agent
-![](agent_interaction.gif)
+![](src/screen_shots/agent_interaction.gif)
 
 
 ### Technologies Used
